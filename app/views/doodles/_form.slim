@@ -1,0 +1,28 @@
+= simple_form_for(doodle) do |f|
+  .row
+    .col-md-4
+      = yield(:page_title)
+      |  doodle !
+      .field
+        = f.input :name
+        = f.input :location
+        = f.input :creator
+
+        = "New Date"
+        .input-group
+          span.input-group-btn
+            button.btn.btn-success type="button"
+              = "Add date"
+          input.form-control type="text" data-provide="datepicker"
+        br
+        = "Already proposed dates"
+        br
+        .input-group
+          span.input-group-addon
+            input type="checkbox"
+          input.form-control type="text" value="32-09-2016"
+        br
+        = f.submit('Save doodle !')
+
+    .col-md-8
+      = f.input :description

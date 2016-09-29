@@ -1,0 +1,52 @@
+p#notice = notice
+.well.row
+  h2.text-xs-center.col-md-12 = @doodle.name
+  .col-md-5
+    br
+    p = "Created by #{@doodle.creator} "
+    p = "Created at #{@doodle.created_at} "
+    p = "Location #{@doodle.location} "
+    p = "URL #{doodle_url(@doodle.token)} "
+    = link_to 'Edit', edit_doodle_path(@doodle.token)
+    hr.m-y-2
+  .col-md-7
+    h3
+      = "Description of the doodle"
+    p = @doodle.description.html_safe
+  br
+  .col-md-12
+    table.table.table-hover
+      thead.thead-default
+        tr
+          th.col-md-4 Members
+          th.col-md-2 30 sept 2016
+          th.col-md-2 32 sept 2016
+      tbody
+        tr
+          td.col-md-4
+            .input-group.input-group-sm
+              span.input-group-btn
+                button#add_member.btn.btn-secondary type="button"  Join !
+              input.form-control placeholder="Mr.Robot" type="text"
+          td.col-md-2
+            input type="checkbox"
+          td.col-md-2
+            input type="checkbox"
+        tr
+          td.col-md-4 Mark
+          td.col-md-2
+            span.glyphicon.glyphicon-ok
+          td.col-md-2
+            span.glyphicon.glyphicon-remove
+        tr
+          td.col-md-4 Jacob
+          td.col-md-2
+            span.glyphicon.glyphicon-ok
+          td.col-md-2
+            span.glyphicon.glyphicon-remove
+        tr
+          td Larry
+          td.col-md-4
+            span.glyphicon.glyphicon-remove
+          td.col-md-2
+            span.glyphicon.glyphicon-remove
