@@ -71,6 +71,6 @@ class DoodlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def doodle_params
-      params.require(:doodle).permit(:name, :location, :description, :creator)
+      params.require(:doodle).permit(:name, :location, :description, :creator, :dates => [])
     end
 end

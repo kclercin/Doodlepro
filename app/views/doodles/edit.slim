@@ -1,0 +1,4 @@
+br
+- provide(:page_title, 'Edition')
+= simple_form_for @doodle, url: doodle_path(@doodle.token) do |f|
+ = render 'form', f: f

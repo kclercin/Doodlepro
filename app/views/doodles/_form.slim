@@ -1,28 +1,68 @@
-= simple_form_for(doodle) do |f|
-  .row
-    .col-md-4
+.row
+  .col-md-12
+    h3
       = yield(:page_title)
       |  doodle !
+      - if @doodle.persisted?
+        = link_to 'Voir le doodle', doodle_path(@doodle.token), class: "btn btn-info pull-right"
+
+  .col-md-4
+    .well
       .field
         = f.input :name
         = f.input :location
         = f.input :creator
 
-        = "New Date"
+        strong Nouvelle date
         .input-group
+          input.form-control type="text" data-provide="datepicker" name="doodle_dates"
           span.input-group-btn
-            button.btn.btn-success type="button"
-              = "Add date"
-          input.form-control type="text" data-provide="datepicker"
-        br
-        = "Already proposed dates"
-        br
-        .input-group
-          span.input-group-addon
-            input type="checkbox"
-          input.form-control type="text" value="32-09-2016"
-        br
-        = f.submit('Save doodle !')
+            button.btn.btn-success#addDate type="button"
+              | Ajouter la date
 
-    .col-md-8
-      = f.input :description
+        #hiddenDates.hide
+          - @doodle.dates.each do |date|
+            = hidden_field_tag "doodle[dates][]", date
+
+        br
+        strong Dates déjà proposées
+
+        #proposedDates
+          - @doodle.dates.each do |date|
+            .proposed-date data-date=date
+              | Le #{date}
+              a.pull-right href='#'
+                | Supprimer
+
+        br
+        - if false
+          .input-group
+            span.input-group-addon
+              input type="checkbox"
+            input.form-control type="text" value="32-09-2016"
+          br
+        = f.submit 'Save doodle !', class: "btn btn-success"
+
+  .col-md-8
+    = f.input :description
+
+
+coffee:
+  $("#addDate").on "click", (e) ->
+    e.preventDefault()
+    input = $("[name='doodle_dates']")
+    if input.val() isnt ""
+      alreadyExists = $("#hiddenDates input[value='#{input.val()}']").size() > 0
+      unless alreadyExists
+        hidden = $("<input type='hidden' name='doodle[dates][]' value='#{input.val()}'/>")
+        $("#hiddenDates").append(hidden)
+        date = $("<div class='proposed-date' data-date='#{input.val()}'>Le #{input.val()} <a class='pull-right' href='#'>Supprimer</a></div>")
+        $("#proposedDates").append(date)
+
+    input.val("")
+
+  $(document).on "click", ".proposed-date a", (e) ->
+    e.preventDefault()
+    date = $(this).parent(".proposed-date").attr("data-date")
+    $(this).parent(".proposed-date").remove()
+    $("#hiddenDates input[value='#{date}']").remove()
