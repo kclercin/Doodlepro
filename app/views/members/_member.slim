@@ -1,0 +1,12 @@
+tr
+  td = member.name
+  - @doodle.dates.each do |date|
+    td.col-md-4
+      - if member.dates.blank?
+        span.glyphicon.glyphicon-remove
+      - else
+        - if member.dates.include? date
+          span.glyphicon.glyphicon-ok
+        - else
+          span.glyphicon.glyphicon-remove
+  td
